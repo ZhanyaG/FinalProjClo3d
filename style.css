@@ -1,0 +1,53 @@
+:root{
+  --bg:#f7f9fc;
+  --accent:#111;
+  --muted:#666;
+  --card:#fff;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+body{background:var(--bg);color:var(--accent);display:flex;flex-direction:column;align-items:center;padding:20px 16px;}
+
+.container{max-width:1000px;width:100%}
+.site-header{width:100%;text-align:center;padding:28px 0}
+.site-header.small{padding:18px 0}
+.site-header h1{margin:.25rem 0;font-size:clamp(1.4rem,3.2vw,2rem)}
+.lead{margin:0;color:var(--muted)}
+
+.nav{margin-top:12px}
+.nav .btn{margin:0 .25rem}
+
+/* Buttons */
+.btn{background:var(--accent);color:#fff;border:0;padding:.55rem .9rem;border-radius:8px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+.btn-ghost{background:transparent;border:1px solid #ddd;color:var(--accent)}
+.btn-lg{padding:.8rem 1.1rem;font-size:1.05rem}
+
+/* Main content */
+.main{display:flex;flex-direction:column;gap:18px;padding:18px 0}
+.stats, .blurb{background:var(--card);padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(10,10,10,.04)}
+.stats h2, .blurb h2{margin:0 0 .5rem}
+.stats ul{margin:.5rem 0 0;padding-left:1.15rem;color:var(--muted)}
+.stats li{margin:.45rem 0}
+
+/* Reveal area */
+.reveal-wrap{position:relative;width:100%;aspect-ratio:16/9;max-height:720px;overflow:hidden;border-radius:12px;box-shadow:0 6px 20px rgba(10,10,10,.08);background:#ddd;touch-action:none}
+.reveal-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;pointer-events:none}
+.overlay-image{
+  z-index:2;
+  clip-path:circle(0px at 50% 50%);
+  -webkit-clip-path:circle(0px at 50% 50%);
+  transition:clip-path .04s linear;
+}
+
+/* small hint */
+.hint{color:var(--muted);font-size:.95rem;margin-top:6px;text-align:center}
+
+/* footer */
+.footer{margin-top:12px;text-align:center;color:var(--muted)}
+
+/* responsive */
+@media (max-width:640px){
+  .controls{display:flex;flex-direction:column;gap:.5rem;align-items:center}
+  .btn{width:90%}
+}

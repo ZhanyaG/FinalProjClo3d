@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VR Reveal — Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header small">
+    <div class="container">
+      <h1>Wear the glasses</h1>
+      <p class="lead">Click "Wear glasses" then move the mouse or touch the image to reveal the VR outfit.</p>
+      <div class="controls">
+        <button id="toggleGlasses" class="btn">Wear glasses</button>
+        <button id="reset" class="btn btn-ghost">Reset</button>
+        <a href="index.html" class="btn btn-ghost">Back</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main container">
+    <section class="reveal-wrap" id="revealWrap" aria-label="Image reveal area">
+
+      <img src="png1.png" alt="Real world outfit" class="base-image" id="baseImage" />
+      
+      <img src="png2.png" alt="Virtual outfit" class="overlay-image" id="overlayImage" />
+    </section>
+
+    <p class="hint">Tip: touch or move pointer while glasses are on. Radius and softness can be adjusted in the script.</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
