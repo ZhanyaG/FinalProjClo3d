@@ -30,14 +30,16 @@ body{background:var(--bg);color:var(--accent);display:flex;flex-direction:column
 .stats ul{margin:.5rem 0 0;padding-left:1.15rem;color:var(--muted)}
 .stats li{margin:.45rem 0}
 
-/* Reveal area */
-.reveal-wrap{position:relative;width:100%;aspect-ratio:16/9;max-height:720px;overflow:hidden;border-radius:12px;box-shadow:0 6px 20px rgba(10,10,10,.08);background:#ddd;touch-action:none}
-.reveal-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;pointer-events:none}
-.overlay-image{
-  z-index:2;
-  clip-path:circle(0px at 50% 50%);
-  -webkit-clip-path:circle(0px at 50% 50%);
-  transition:clip-path .04s linear;
+/* paste into your existing styles.css — only the canvas rule is essential */
+.reveal-wrap canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:12px;
+  touch-action:none; /* prevent default scrolling while painting */
+  outline: none;
 }
 
 /* small hint */

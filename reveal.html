@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VR Reveal — Demo</title>
+  <title>VR Reveal — Brush Demo</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header small">
     <div class="container">
       <h1>Wear the glasses</h1>
-      <p class="lead">Click "Wear glasses" then move the mouse or touch the image to reveal the VR outfit.</p>
+      <p class="lead">Click "Wear glasses" then move the mouse or touch the image to paint-reveal the VR outfit. Stroke-by-stroke accumulation.</p>
       <div class="controls">
         <button id="toggleGlasses" class="btn">Wear glasses</button>
         <button id="reset" class="btn btn-ghost">Reset</button>
@@ -18,16 +18,17 @@
       </div>
     </div>
   </header>
+    <p class="hint">Tip: Click "Wear glasses" then drag or swipe. Use the Reset button to hide the VR layer.</p>
 
   <main class="main container">
     <section class="reveal-wrap" id="revealWrap" aria-label="Image reveal area">
-
-      <img src="png1.png" alt="Real world outfit" class="base-image" id="baseImage" />
       
-      <img src="png2.png" alt="Virtual outfit" class="overlay-image" id="overlayImage" />
-    </section>
+      <canvas id="displayCanvas" tabindex="0" aria-label="Image reveal canvas"></canvas>
 
-    <p class="hint">Tip: touch or move pointer while glasses are on. Radius and softness can be adjusted in the script.</p>
+    
+      <img id="imgBase" src="png1.png" alt="" style="display:none" />
+      <img id="imgOverlay" src="png2.png" alt="" style="display:none" />
+    </section>
   </main>
 
   <script src="script.js"></script>
