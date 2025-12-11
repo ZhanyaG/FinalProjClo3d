@@ -3,34 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VR Reveal — Demo</title>
+  <title>VR Reveal.Demo.</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="reveal-page">
-  <!-- Header / title + instructions -->
-  <header class="site-header small">
-    <div class="container">
-      <h1>Wear the glasses</h1>
-      <p class="lead">Click "Wear glasses" then move the mouse or touch the image to paint-reveal the VR outfit.</p>
 
-      <!-- Buttons: toggle, reset, back -->
-      <div class="controls cta-row">
-        <button id="toggleGlasses" class="btn btn-lg">Wear glasses</button>
-        <button id="reset" class="btn btn-ghost btn-lg">Reset</button>
-        <a href="index.html" class="btn btn-ghost btn-lg">Back</a>
+  <header class="hero">
+    <div class="container hero-inner">
+      <h1>Wear the glasses</h1>
+      <p class="lead">Click "Let's try now" then move the mouse to paint-reveal the VR outfit.</p>
+
+      <div class="hero-cta">
+        <button id="startDemoBtn" class="btn btn-lg">Let's try now!</button>
       </div>
     </div>
   </header>
-    <p class="hint">Tip: Click "Wear glasses" then drag or swipe. Use the Reset button to hide the VR layer.</p>
+
   <main class="main container">
-  
-    <section class="reveal-wrap" id="revealWrap" aria-label="Image reveal area">
+    <!-- Reveal area (hidden until CTA) -->
+    <section class="reveal-wrap hidden" id="revealWrap" aria-label="Image reveal area">
       <canvas id="displayCanvas" tabindex="0" aria-label="Image reveal canvas"></canvas>
 
-      
-      <img id="imgBase" src="png1.png" alt="" style="display:none" />
-      <img id="imgOverlay" src="png2.png" alt="" style="display:none" />
+      <!-- Fake demo cursor and highlight (above canvas) -->
+      <div id="demoHighlight" class="demo-highlight" aria-hidden="true" style="display:none"></div>
+      <div id="demoCursor" class="demo-cursor" aria-hidden="true" style="display:none"></div>
+
+      <!-- Hidden source images -->
+      <img id="imgBase" src="png1.png" alt="Real outfit" style="display:none" />
+      <img id="imgOverlay" src="png2.png" alt="Virtual outfit" style="display:none" />
     </section>
+
+    <!-- Controls (shown after CTA) - NOTE: no 'Wear glasses' toggle button -->
+    <div class="controls cta-row reveal-controls" id="revealControls" style="display:none">
+      <button id="reset" class="btn btn-ghost btn-lg">Reset</button>
+      <a href="index.html" class="btn btn-ghost btn-lg">Back</a>
+    </div>
+
   </main>
 
   <script src="script.js"></script>
