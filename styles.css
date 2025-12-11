@@ -1,11 +1,6 @@
-/* ===================== */
-/*   GOOGLE FONT IMPORT   */
-/* ===================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* ===================== */
-/*        VARIABLES       */
-/* ===================== */
+/* variables */
 :root {
   --bg: #f0f4f8;
   --primary: #0f172a;
@@ -17,17 +12,14 @@
   --radius: 12px;
 }
 
-/* ===================== */
-/*         BASE          */
-/* ===================== */
+
 * { box-sizing: border-box; margin:0; padding:0; }
 html, body { height:100%; font-family:'Inter', sans-serif; background: var(--bg); color: var(--primary); }
 a { text-decoration:none; color:inherit; }
 .container { max-width:1000px; width:100%; margin:0 auto; padding:0 16px; }
 
-/* ===================== */
-/*    PAGE 1 BACKGROUND   */
-/* ===================== */
+
+/* PAGE1 */
 body.index-page {
   background: url('bckgrnd.png') no-repeat center center / cover;
   color: #fff;
@@ -41,9 +33,8 @@ body.index-page::before {
 }
 body.index-page .container { position: relative; z-index: 1; }
 
-/* ===================== */
-/*    PAGE 2 BACKGROUND   */
-/* ===================== */
+
+/* PAGE2 */
 body.reveal-page {
   background: url('bckgrnd3.png') no-repeat center center / cover;
   color: #fff;
@@ -57,9 +48,8 @@ body.reveal-page::before {
 }
 body.reveal-page .container { position: relative; z-index: 1; }
 
-/* ===================== */
-/*        HEADER          */
-/* ===================== */
+/* HEADER */
+
 .site-header { text-align:center; padding:40px 0 20px; }
 .site-header.small { padding:24px 0 12px; }
 .site-header h1 { font-size:clamp(1.8rem,4vw,2.8rem); font-weight:700; margin-bottom:12px; }
@@ -67,40 +57,37 @@ body.reveal-page .container { position: relative; z-index: 1; }
 body.index-page .site-header .lead { color: #f0f4f8; }
 body.reveal-page .site-header h1, body.reveal-page .site-header .lead { color: #f0f4f8; }
 
-/* ===================== */
-/*         HERO (page2)   */
-/* ===================== */
+/* Text and button on page2 */
 .hero {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* center vertically */
-  align-items: center;       /* center horizontally */
+  justify-content: center;   
+  align-items: center;        
   text-align: center;
   gap: 12px;
-  padding: 0 16px;
-  color: #fff;
+  padding: 0 20px;
+  width: 100%;
 }
 
-.hero h2 {
-  font-size: 2rem;
-  margin: 0;
-}
-
+.hero h2, 
 .hero p {
-  font-size: 1rem;
-  max-width: 520px;
-  opacity: 0.9;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .hero .btn-lg {
-  margin-top: 8px;
+  margin: 10px auto 0 auto;
+  display: inline-block;
 }
 
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
 
-/* ===================== */
-/*         BUTTONS        */
-/* ===================== */
+/* Button on p2 */
 .btn {
   display:inline-block;
   background:var(--accent);
@@ -128,15 +115,11 @@ body.reveal-page .site-header h1, body.reveal-page .site-header .lead { color: #
 body.reveal-page .btn-ghost { color:#3b82f6; border:2px solid #3b82f6; }
 body.reveal-page .btn-ghost:hover { background:#3b82f6; color:#fff; }
 
-/* ===================== */
-/*    NAVIGATION & CTA    */
-/* ===================== */
+/* Navigation */
 .nav { margin-top:16px; display:flex; justify-content:center; gap:12px; }
 .cta-row { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:12px; }
 
-/* ===================== */
-/*    MAIN CONTENT        */
-/* ===================== */
+/* Content */
 .main { display:flex; flex-direction:column; gap:24px; padding:24px 0; }
 
 .stats, .blurb {
@@ -150,14 +133,12 @@ body.reveal-page .btn-ghost:hover { background:#3b82f6; color:#fff; }
 .stats ul { margin-top:8px; padding-left:1.25rem; color: var(--secondary); }
 .stats li { margin-bottom:8px; line-height:1.5; }
 
-/* ===================== */
-/*      REVEAL CANVAS      */
-/* ===================== */
+/* Canvas reveal with clo3d pics */
 .reveal-wrap {
   position:relative;
   width:100%;
   border-radius:14px;
-  overflow:hidden;                 /* preserves rounded corners */
+  overflow:hidden;              
   background:#000;
   box-shadow: 0 8px 24px rgba(0,0,0,0.6);
   touch-action:none;
@@ -167,31 +148,26 @@ body.reveal-page .btn-ghost:hover { background:#3b82f6; color:#fff; }
   padding:0;
 }
 
-/* Canvas sizing rule (JS will set exact CSS height to match image ratio) */
 .reveal-wrap canvas {
   border-radius:14px;
   outline:none;
   width:100%;
-  height:auto;      /* important: maintain image ratio */
+  height:auto;    
   max-height:75vh;
   display:block;
 }
 
-/* Hidden until CTA */
 .reveal-wrap.hidden { display:none; }
 
-/* Reveal controls */
+
 .reveal-controls { margin-top:14px; justify-content:center; display:flex; gap:12px; }
 
-/* ===================== */
-/*      DEMO HIGHLIGHT    */
-/* ===================== */
-/* soft semi-transparent brush graphic that follows demo cursor */
+/* DEMO white circle as an example to navigate the user through the action */
 .demo-highlight {
   position: absolute;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  width: 160px;               /* demo brush diameter (adjustable) */
+  width: 160px;          
   height: 160px;
   border-radius: 50%;
   background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.00) 70%);
@@ -202,12 +178,7 @@ body.reveal-page .btn-ghost:hover { background:#3b82f6; color:#fff; }
   opacity: 0.95;
 }
 
-/* smaller variant (if you want) */
-/* .demo-highlight.small { width: 110px; height: 110px; } */
-
-/* ===================== */
-/*      DEMO CURSOR       */
-/* ===================== */
+/* Demo cursor itself */
 .demo-cursor {
   position: absolute;
   width: 28px;
@@ -229,17 +200,13 @@ body.reveal-page .btn-ghost:hover { background:#3b82f6; color:#fff; }
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
-/* ===================== */
-/*          FOOTER        */
-/* ===================== */
+/* Footer */
 .footer { margin-top:24px; text-align:center; color: #f0f4f8; font-size:.85rem; }
 
 /* Hint text */
 .hint { color:#e2e8f0; font-size:.95rem; text-align:center; margin-top:12px; }
 
-/* ===================== */
-/*       RESPONSIVE       */
-/* ===================== */
+/* Response as a brush -reveal */
 @media(max-width:640px){
   .nav, .cta-row { flex-direction:column; gap:10px; }
   .btn { width:100%; text-align:center; }

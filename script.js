@@ -1,28 +1,11 @@
-/* script.js
+/* main things through the file: 
    - Brush reveal (accumulative mask)
-   - Start CTA: show reveal area, run 5s demo cursor+highlight animation
+   - Show reveal area, run 5s demo cursor+highlight animation
      that starts from center and does a few left-right passes, then returns center.
    - Painting is enabled immediately when demo starts; start button hides.
-   - Reset/back controls remain.
-*/
+   - Reset/back controls remain.*/
 
-/* ---------------------------
-   DOM ready
-   --------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
-  // Index copy (if present)
-  const learnBtn = document.getElementById('learnMore');
-  if (learnBtn) {
-    learnBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const text = "Wear less. Style more. Switch looks instantly — digital outfits in AR/VR, simple real-world clothes. Cleaner wardrobe, lower waste.";
-      navigator.clipboard?.writeText(text).then(() => {
-        learnBtn.textContent = 'Copied!';
-        setTimeout(() => learnBtn.textContent = 'Copy summary', 1500);
-      });
-    });
-  }
-
   // Reveal page elements
   const startBtn = document.getElementById('startDemoBtn');
   const wrap = document.getElementById('revealWrap');
@@ -34,14 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const demoHighlight = document.getElementById('demoHighlight');
   const resetBtn = document.getElementById('reset');
 
-  // create brush demo instance
+  // brush demo instance
   let brushDemo = null;
   if (wrap && canvas && imgBase && imgOverlay) {
-    // note: no toggle button passed; painting will be enabled on start
     brushDemo = initBrushReveal({ wrap, canvas, imgBase, imgOverlay, resetBtn });
   }
 
-  // Start CTA: show reveal, start 5s demo animation, enable painting immediately
+  // Show reveal, start 5s demo animation, enable painting immediately
   if (startBtn && wrap && brushDemo && demoCursor && demoHighlight) {
     startBtn.addEventListener('click', () => {
       // hide the start button after click
@@ -65,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
           canvas,
           demoCursor,
           demoHighlight,
-          duration: 5000, // 5 seconds
-          passes: 3,      // number of left-right passes
+          duration: 5000, 
+          passes: 3,      
           onComplete: () => {
             // Hide demo UI after animation finishes (painting remains enabled)
             demoCursor.style.display = 'none';
@@ -81,45 +63,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/* =========================
-   Demo cursor + highlight animation (updated)
-   - Starts from center, then performs `passes` left-right traversals, then returns center.
-   - duration is total animation time in ms.
-   - Moves demoCursor and demoHighlight; does not alter overlay mask.
-   ========================= */
+/* Demo cursor + highlight animation 
+   Starts from center, then performs `passes` left-right traversals, then returns center. */
 function startDemoAnimation({ wrap, canvas, demoCursor, demoHighlight, duration = 5000, passes = 3, onComplete = () => {} }) {
   // show demo elements
   demoCursor.style.display = 'block';
   demoCursor.classList.add('pulse');
   demoHighlight.style.display = 'block';
 
-  // compute bounds
-  const rect = canvas.getBoundingClientRect();
+  // compute bounds relative to the wrap container so CSS absolute coordinates match
+  const wrapRect = wrap.getBoundingClientRect();
+  const canvasRect = canvas.getBoundingClientRect();
+
+  // Canvas inner bounds but compute coordinates relative to wrap's top-left
   const margin = 0.06;
-  const leftX = rect.left + rect.width * margin;
-  const rightX = rect.left + rect.width * (1 - margin);
-  const centerX = rect.left + rect.width * 0.5;
-  // vertical positions for passes: use center line (could vary slightly)
-  const centerY = rect.top + rect.height * 0.5;
+  const leftX_abs = canvasRect.left + canvasRect.width * margin;
+  const rightX_abs = canvasRect.left + canvasRect.width * (1 - margin);
+  const centerX_abs = canvasRect.left + canvasRect.width * 0.5;
+  const centerY_abs = canvasRect.top + canvasRect.height * 0.5;
 
-  // Build path: start at center, then for `passes` times go left->right (or right->left alternating),
-  // finally return to center. Example with passes=3: center, left, right, left, right, center.
+  // path stores coordinates relative to wrap's top-left (so absolute CSS left/top use same origin)
   const path = [];
-  path.push({ x: centerX, y: centerY }); // start center
 
-  // pick direction for first pass as left->right
+  // helper: convert absolute viewport coords -> wrap-relative coords
+  const toWrap = (absX, absY) => ({ x: absX - wrapRect.left, y: absY - wrapRect.top });
+
+  // start centered
+  path.push(toWrap(centerX_abs, centerY_abs));
+
   for (let p = 0; p < passes; p++) {
     if (p % 2 === 0) {
-      path.push({ x: leftX, y: centerY });
-      path.push({ x: rightX, y: centerY });
+      path.push(toWrap(leftX_abs, centerY_abs));
+      path.push(toWrap(rightX_abs, centerY_abs));
     } else {
-      path.push({ x: rightX, y: centerY });
-      path.push({ x: leftX, y: centerY });
+      path.push(toWrap(rightX_abs, centerY_abs));
+      path.push(toWrap(leftX_abs, centerY_abs));
     }
   }
 
   // ensure we end centered
-  path.push({ x: centerX, y: centerY });
+  path.push(toWrap(centerX_abs, centerY_abs));
 
   // animation mapping
   const totalSegments = Math.max(1, path.length - 1);
@@ -127,7 +110,7 @@ function startDemoAnimation({ wrap, canvas, demoCursor, demoHighlight, duration 
   let rafId = null;
 
   function step(now) {
-    const t = Math.min(1, (now - startTime) / duration); // 0..1 normalized
+    const t = Math.min(1, (now - startTime) / duration); 
     const segmentF = t * totalSegments;
     const segIndex = Math.floor(segmentF);
     const localT = Math.min(1, segmentF - segIndex);
@@ -173,10 +156,7 @@ function easeOutCubic(t) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-/* =========================
-   initBrushReveal (unchanged brush implementation)
-   - returns { enable, disable, fitAndRender }
-   ========================= */
+/* initBrushReveal */
 function initBrushReveal({ wrap, canvas, imgBase, imgOverlay, resetBtn }) {
   const maskCanvas = document.createElement('canvas');
   const overlayCanvas = document.createElement('canvas');
@@ -208,7 +188,7 @@ function initBrushReveal({ wrap, canvas, imgBase, imgOverlay, resetBtn }) {
   function fitCanvases() {
     const rect = wrap.getBoundingClientRect();
     const containerWidth = Math.max(200, Math.floor(rect.width));
-    const imgRatio = imgBase.naturalWidth / imgBase.naturalHeight || 16/9;
+    const imgRatio = (imgBase.naturalWidth && imgBase.naturalHeight) ? (imgBase.naturalWidth / imgBase.naturalHeight) : (16/9);
     const displayHeight = Math.floor(containerWidth / imgRatio);
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
